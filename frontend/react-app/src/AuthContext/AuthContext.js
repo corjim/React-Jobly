@@ -79,7 +79,7 @@ import { jwtDecode } from "jwt-decode"; // Utility to decode JSON Web Tokens.
 import JoblyApi from "../api/Api";
 
 
-const AuthContext = createContext(null); // Ensure correct export
+const AuthContext = createContext(); // Ensure correct export
 
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -112,7 +112,7 @@ function AuthProvider({ children }) {
         // stop loading if no token or user;
         if (!token) {
             setUser(null);
-            setLoading(null);
+            setLoading(false);
             return;
         }
 
@@ -157,18 +157,24 @@ function AuthProvider({ children }) {
         fetchUser();
     }, [token]);
 
-    async function login(username, password) {
-        try {
-            const newToken = await JoblyApi.login(username, password);
-            setToken(newToken);
-            JoblyApi.token = newToken;
-            localStorage.setItem("token", newToken);
-            console.log("Login was successful", newToken)
-        } catch (err) {
-            console.error("login fAILED", err);
-            throw err;
-        }
-    }
+    // async function login(username, password) {
+    //     try {
+    //         const newToken = await JoblyApi.login(username, password);
+    //         setToken(newToken);
+    //         JoblyApi.token = newToken;
+    //         localStorage.setItem("token", newToken);
+    //         console.log("Login was successful", newToken)
+    //     } catch (err) {
+    //         console.error("login fAILED", err);
+    //         throw err;
+    //     }
+    // }
+
+    // Login the user
+
+    const login = (newToken) => {
+        setToken(newToken); // Update the `token` state
+    };
 
     async function signup(userData) {
         try {

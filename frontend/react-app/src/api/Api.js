@@ -85,6 +85,19 @@ class JoblyApi {
     }
   }
 
+  /** Authenticate user */
+
+  static async authenticateUser(username, password) {
+    try {
+      let res = await this.request("auth/token", { username, password }, "post");
+      const { token } = res; // Extract the token from the response
+      return { token }; // Only return the token
+    } catch (error) {
+      console.error("Error authenticating user:", error);
+      throw error;
+    }
+  };
+
   static async signup(userData) {
     let res = await this.request("auth/register", userData, "post");
     this.token = res.token;
