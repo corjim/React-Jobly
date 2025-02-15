@@ -84,7 +84,6 @@ const AuthContext = createContext(); // Ensure correct export
 function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token") || null);
-
     // State to indicate whether authentication-related data is still loading.
     const [loading, setLoading] = useState(true);
 

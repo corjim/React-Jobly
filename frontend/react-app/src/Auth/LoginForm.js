@@ -21,13 +21,11 @@ function LoginForm() {
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-            const token = await JoblyApi.authenticateUser(formData.username, formData.password);
-
-            console.log(this.token)
-
             // log the user in using the login function from context
-            login(token);
-
+            const data = await JoblyApi.authenticateUser(formData.username, formData.password);
+            JoblyApi.token = data.token;
+            localStorage.setItem("token", data.token);
+            login(data.token);
             navigate("/");
 
         } catch (err) {
